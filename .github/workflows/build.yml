@@ -1,5 +1,16 @@
+name: Build
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        python-version: ["3.9.13"]
+    steps:
 # Build python script into a stand-alone exe
-- uses: Nuitka/Nuitka-Action@main
-  with:
-    nuitka-version: main
-    script-name: main.py
+      - uses: Nuitka/Nuitka-Action@main
+        with:
+         nuitka-version: main
+         script-name: main.py
