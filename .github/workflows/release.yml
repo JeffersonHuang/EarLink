@@ -17,10 +17,7 @@ jobs:
     - run: pip install -r requirements.txt
     - run: pyinstaller -F -w main.py
     - run: Copy-Item -Path .\resources\ -Destination .\dist\resources\ -Recurse
-    - uses: montudor/action-zip@v1
-      with:
-        args: dist -qq -r Earlink.zip Earlink
-
+    - run: Compress-Archive -Path dist  -DestinationPath Earlink.zip
     - name: Upload release file
       uses: actions/upload-release-asset@v1
       env:
