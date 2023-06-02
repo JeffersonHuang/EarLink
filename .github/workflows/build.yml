@@ -24,3 +24,8 @@ jobs:
         cache: 'pip' # caching pip dependencies
     - run: pip install -r requirements.txt
     - run: pyinstaller -F -w main.py
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v3.1.2
+      with:
+        name: build
+        path: dist
