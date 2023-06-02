@@ -1,0 +1,28 @@
+name: Build and Release EarLink Windows Desktop Binary
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀 
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        cache: 'pip' # caching pip dependencies
+    - run: pip install -r requirements.txt
+    - run: pyinstaller -F -w main.py
+    - run: Copy-Item -Path .\resources\ -Destination .\dist\resources\ -Recurse
+    
+    - name: Upload release file
+      uses: actions/upload-release-asset@v1
+      env:
+       GITHUB_TOKEN: ${{ secrets.action_token_release_upload }}
+      with:
+       upload_url: ${{ github.event.release.upload_url }}
+       asset_path: build/dist/main.exe
+       asset_name: earlink.exe
+       asset_content_type: application/octet-stream
