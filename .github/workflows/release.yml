@@ -24,6 +24,6 @@ jobs:
        GITHUB_TOKEN: ${{ secrets.action_token_release_upload }}
       with:
        upload_url: ${{ github.event.release.upload_url }}
-       asset_path: dist/main.exe
-       asset_name: earlink.exe
+       asset_path: dist/
+       asset_name: earlink.zip
        asset_content_type: application/octet-stream
