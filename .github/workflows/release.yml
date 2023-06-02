@@ -17,13 +17,16 @@ jobs:
     - run: pip install -r requirements.txt
     - run: pyinstaller -F -w main.py
     - run: Copy-Item -Path .\resources\ -Destination .\dist\resources\ -Recurse
-    
+    - uses: montudor/action-zip@v1
+      with:
+        args: dist -qq -r Earlink.zip Earlink
+
     - name: Upload release file
       uses: actions/upload-release-asset@v1
       env:
        GITHUB_TOKEN: ${{ secrets.action_token_release_upload }}
       with:
        upload_url: ${{ github.event.release.upload_url }}
-       asset_path: dist/
-       asset_name: earlink.zip
+       asset_path: ./Earlink.zip
+       asset_name: Earlink.zip
        asset_content_type: application/octet-stream
