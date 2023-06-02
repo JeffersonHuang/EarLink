@@ -1,13 +1,13 @@
 # coding:utf-8
 import sys
+
 from PyQt5.QtCore import Qt, QRect
 from PyQt5.QtGui import QIcon, QPainter, QImage, QBrush, QColor, QFont
 from PyQt5.QtWidgets import QApplication, QFrame, QStackedWidget, QHBoxLayout, QLabel
-
-from qfluentwidgets import (NavigationInterface,NavigationItemPosition, NavigationWidget, MessageBox,
-                            isDarkTheme, setTheme, Theme, qrouter)
 from qfluentwidgets import FluentIcon as FIF
+from qfluentwidgets import *
 from qframelesswindow import FramelessWindow, TitleBar
+from windowstoast import Toast
 
 
 class Widget(QFrame):
@@ -19,7 +19,6 @@ class Widget(QFrame):
         self.label.setAlignment(Qt.AlignCenter)
         self.hBoxLayout = QHBoxLayout(self)
         self.hBoxLayout.addWidget(self.label, 1, Qt.AlignCenter)
-
         # leave some space for title bar
         self.hBoxLayout.setContentsMargins(0, 32, 0, 0)
 
@@ -88,6 +87,12 @@ class CustomTitleBar(TitleBar):
         self.iconLabel.setPixmap(QIcon(icon).pixmap(18, 18))
 
 
+def show_windows_toast():
+    print('show_windows_toast')
+    t = Toast()
+    t.show()
+
+
 class Window(FramelessWindow):
 
     def __init__(self):
@@ -104,6 +109,9 @@ class Window(FramelessWindow):
 
         # create sub interface
         self.searchInterface = Widget('Search Interface', self)
+        btn = PushButton(self.searchInterface)
+        btn.move(50, 50)
+        btn.clicked.connect(show_windows_toast)
         self.musicInterface = Widget('Music Interface', self)
         # self.videoInterface = Widget('Video Interface', self)
         # self.folderInterface = Widget('Folder Interface', self)
@@ -155,7 +163,7 @@ class Window(FramelessWindow):
 
         self.addSubInterface(self.settingInterface, FIF.SETTING, 'Settings', NavigationItemPosition.BOTTOM)
 
-        #!IMPORTANT: don't forget to set the default route key
+        # !IMPORTANT: don't forget to set the default route key
         qrouter.setDefaultRouteKey(self.stackWidget, self.musicInterface.objectName())
 
         # set the maximum width
@@ -172,7 +180,7 @@ class Window(FramelessWindow):
 
         desktop = QApplication.desktop().availableGeometry()
         w, h = desktop.width(), desktop.height()
-        self.move(w//2 - self.width()//2, h//2 - self.height()//2)
+        self.move(w // 2 - self.width() // 2, h // 2 - self.height() // 2)
 
         self.setQss()
 
@@ -211,7 +219,7 @@ class Window(FramelessWindow):
 
     def resizeEvent(self, e):
         self.titleBar.move(46, 0)
-        self.titleBar.resize(self.width()-46, self.titleBar.height())
+        self.titleBar.resize(self.width() - 46, self.titleBar.height())
 
 
 if __name__ == '__main__':
