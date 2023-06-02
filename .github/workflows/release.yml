@@ -1,6 +1,7 @@
-name: Build and Release EarLink Windows Desktop Binary
+name: Release 
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀 
 on:
+  workflow_dispatch:
   release:
     types: [created]
 
