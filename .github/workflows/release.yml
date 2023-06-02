@@ -17,7 +17,7 @@ jobs:
     - run: pip install -r requirements.txt
     - run: pyinstaller -F -w main.py
     - run: Copy-Item -Path .\resources\ -Destination .\dist\resources\ -Recurse
-    - run: Rename-Item -Path  dis -NewName Earlink
+    - run: Rename-Item -Path  dist -NewName Earlink
     - run: Compress-Archive -Path Earlink  -DestinationPath Earlink.zip
     - name: Upload release file
       uses: actions/upload-release-asset@v1
