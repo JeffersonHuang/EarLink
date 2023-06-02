@@ -24,7 +24,7 @@ jobs:
         cache: 'pip' # caching pip dependencies
     - run: pip install -r requirements.txt
     - run: pyinstaller -F -w main.py
-    - run: Copy-Item -Path .\resources\ -Destination .\dist\
+    - run: Copy-Item -Path .\resources\ -Destination .\dist\resources\ -Recurse
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.2
       with:
